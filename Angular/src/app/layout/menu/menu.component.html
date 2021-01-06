@@ -1,0 +1,27 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row *ngIf="!logged">
+    <a mat-button [routerLink]="['/home']" routerLinkActive="router-active"
+      >Home</a
+    >
+    <a mat-button [routerLink]="['/login']" routerLinkActive="router-active"
+      >Login</a
+    >
+    <a mat-button [routerLink]="['/about']" routerLinkActive="router-active"
+      >Acerca de</a
+    >
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="logged">
+    <a mat-button [routerLink]="['/dashboard']" routerLinkActive="router-active"
+      >Dashboard</a
+    >
+    <a mat-button [routerLink]="['/gallery']" routerLinkActive="router-active"
+      >Galería</a
+    >
+    <a mat-button [routerLink]="['/crud']" routerLinkActive="router-active"
+      >CRUD</a
+    >
+    <a mat-button [routerLink]="['/profile']" routerLinkActive="router-active"
+      >Profile</a
+    >
+  </mat-toolbar-row>
+</mat-toolbar>

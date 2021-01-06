@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row *ngIf="!logged">
+    <span class="divider"></span>
+    <span>Bienvenid@!</span>
+    <span class="divider"></span>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="logged">
+    <span class="divider"></span>
+    <span>Laboratorio Angular</span>
+    <span class="divider"></span>
+    <span class="user-options">{{ user }}</span>
+    <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+  </mat-toolbar-row>
+</mat-toolbar>
