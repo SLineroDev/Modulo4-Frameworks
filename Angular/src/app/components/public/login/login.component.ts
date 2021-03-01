@@ -33,12 +33,11 @@ export class LoginComponent {
       if (this.authService.login(this.username.value, this.password.value)) {
         this.router.navigate(['/dashboard']);
       } else {
-        alert('Login incorrecto. \n Pss... User: master Password: 12345678');
+        alert('Login incorrecto. \n Pss... User: master Password: 12');
       }
     }
-    console.log('reactive form submitted');
-    console.log(this.form);
   }
+
   get username() {
     return this.form.get('username') as FormControl;
   }

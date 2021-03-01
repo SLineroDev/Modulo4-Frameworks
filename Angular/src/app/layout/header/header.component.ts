@@ -15,10 +15,11 @@ export class HeaderComponent implements OnInit {
       this.logged = value;
     });
     this.logged = this.auth.isLogged();
-    this.user = this.auth.getUsername();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user = this.auth.getUsername();
+  }
 
   logout(): void {
     this.auth.logout();
