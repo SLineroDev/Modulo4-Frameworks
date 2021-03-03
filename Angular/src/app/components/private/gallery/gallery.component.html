@@ -1,6 +1,9 @@
 <div class="gallery-container">
-  <div *ngIf="selectedImage" class="selected-image">
-    <img [src]="selectedImage.src" [alt]="selectedImage.title" />
+  <div class="selected-image" *ngIf="selectedImage">
+    <div id="selected-img" [style.width]="selectedImageWidth">
+      <img [src]="selectedImage.src" [alt]="selectedImage.title" />
+    </div>
+
     <div class="image-controllers-container">
       <div class="image-controllers-size">
         <button mat-raised-button (click)="decrease()" color="primary">
@@ -11,12 +14,36 @@
         </button>
       </div>
       <div class="image-controllers">
-        <button mat-raised-button (click)="previous()" color="primary">
+        <button
+          mat-raised-button
+          [disabled]="prevDisabled"
+          (click)="previous()"
+          color="primary"
+        >
           Anterior
         </button>
-        <button mat-raised-button (click)="play()" color="primary">Play</button>
-        <button mat-raised-button (click)="stop()" color="primary">Stop</button>
-        <button mat-raised-button (click)="next()" color="primary">
+        <button
+          mat-raised-button
+          *ngIf="!isPlaying"
+          (click)="play()"
+          color="primary"
+        >
+          Play
+        </button>
+        <button
+          mat-raised-button
+          *ngIf="isPlaying"
+          (click)="stop()"
+          color="warn"
+        >
+          Stop
+        </button>
+        <button
+          mat-raised-button
+          [disabled]="nextDisabled"
+          (click)="next()"
+          color="primary"
+        >
           Siguiente
         </button>
       </div>

@@ -2,13 +2,17 @@
   text-align: center;
 }
 .selected-image {
-  width: 500px;
-  margin: auto;
-  img {
-    width: 100%;
-    margin-top: 2rem;
+  min-width: 500px;
+  #selected-img {
+    margin: auto;
+    img {
+      width: 100%;
+      margin-top: 2rem;
+    }
   }
   .image-controllers-container {
+    width: 500px;
+    margin: auto;
     .image-controllers-size {
       display: flex;
       flex-direction: row;

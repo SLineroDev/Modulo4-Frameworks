@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Image } from 'src/app/models/images';
 import { GalleryService } from 'src/app/services/gallery/gallery.service';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-gallery',
@@ -9,9 +10,17 @@ import { GalleryService } from 'src/app/services/gallery/gallery.service';
 })
 export class GalleryComponent {
   images: Image[] = [];
-  selectedImage!: Image;
   maxImgId!: Number;
   minImgId!: Number;
+
+  selectedImage!: Image;
+  selectedImageWidth: String = '500px';
+
+  nextDisabled: boolean = false;
+  prevDisabled: boolean = true;
+
+  isPlaying: boolean = false;
+  intervalImg: Subscription | undefined;
 
   constructor(galleryService: GalleryService) {
     this.images = galleryService.getImageList();
@@ -23,53 +32,82 @@ export class GalleryComponent {
   }
 
   next() {
-    let nextImgId =
-      this.selectedImage.id + 1 <= this.maxImgId
-        ? this.selectedImage.id + 1
-        : this.minImgId;
-    let nextImg: Image | undefined = this.getImgById(nextImgId);
-    if (nextImg) {
-      this.selectImage(nextImg);
+    let nextImgId = this.selectedImage.id + 1;
+    if (nextImgId <= this.maxImgId) {
+      let nextImg: Image | undefined = this.getImgById(nextImgId);
+      if (nextImg) {
+        this.selectImage(nextImg);
+      }
+      this.prevDisabled = false;
+      if (nextImgId == this.maxImgId) {
+        this.nextDisabled = true;
+      }
     }
   }
   previous() {
-    let prevImgId =
-      this.selectedImage.id - 1 >= this.minImgId
-        ? this.selectedImage.id - 1
-        : this.maxImgId;
-    let prevImg: Image | undefined = this.getImgById(prevImgId);
-    if (prevImg) {
-      this.selectImage(prevImg);
+    let prevImgId = this.selectedImage.id - 1;
+    if (prevImgId >= this.minImgId) {
+      let prevImg: Image | undefined = this.getImgById(prevImgId);
+      if (prevImg) {
+        this.selectImage(prevImg);
+      }
+      this.nextDisabled = false;
+      if (prevImgId == this.minImgId) {
+        this.prevDisabled = true;
+      }
     }
   }
-  decrease() {}
-  increase() {}
-  play() {}
-  stop() {}
+  decrease() {
+    let selectedImg = document.getElementById('selected-img');
+    if (selectedImg?.style.width) {
+      let currentWidth = Number.parseInt(
+        selectedImg.style.width.substring(0, selectedImg.style.width.length - 2)
+      );
+      selectedImg.style.width = currentWidth - 30 + 'px';
+    }
+  }
+  increase() {
+    let selectedImg = document.getElementById('selected-img');
+    if (selectedImg?.style.width) {
+      let currentWidth = Number.parseInt(
+        selectedImg.style.width.substring(0, selectedImg.style.width.length - 2)
+      );
+      selectedImg.style.width = currentWidth + 30 + 'px';
+    }
+  }
+  play() {
+    this.isPlaying = true;
+    this.intervalImg = interval(1000).subscribe((x) => {
+      if (this.selectedImage.id != this.maxImgId) {
+        this.next();
+      } else {
+        this.selectImage(this.images[0]);
+        this.nextDisabled = false;
+        this.prevDisabled = true;
+      }
+    });
+  }
+  stop() {
+    this.isPlaying = false;
+    if (this.intervalImg) {
+      this.intervalImg.unsubscribe();
+      this.intervalImg = undefined;
+    }
+  }
 
   selectImage(image: Image) {
-    console.log(this.images);
-
-    let foundImage = this.images.indexOf(image);
-    console.log(foundImage);
-
-    if (foundImage != -1) {
-      if (this.selectedImage) {
-        this.images.push(this.selectedImage);
-      }
-      this.selectedImage = this.images.splice(foundImage, 1)[0];
-      this.images.sort((a, b) => {
-        return a.id < b.id ? -1 : 1;
-      });
+    let foundImage = this.images.find((img) => img.id == image.id);
+    if (foundImage) {
+      this.selectedImage = foundImage;
     }
   }
 
   private getImgById(imageId: Number): Image | undefined {
     let found: boolean = false;
     let result: Image | undefined = undefined;
-    for (const image of this.images) {
-      if (image.id == imageId) {
-        result = image;
+    for (let i = 0; i < this.images.length && !found; i++) {
+      if (this.images[i].id == imageId) {
+        result = this.images[i];
       }
     }
     return result;
