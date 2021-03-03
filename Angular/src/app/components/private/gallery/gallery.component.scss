@@ -2,10 +2,29 @@
   text-align: center;
 }
 .selected-image {
-  width: 100%;
+  width: 500px;
+  margin: auto;
   img {
-    width: 500px;
-    padding: 2rem;
+    width: 100%;
+    margin-top: 2rem;
+  }
+  .image-controllers-container {
+    .image-controllers-size {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      button {
+        margin: 1rem;
+      }
+    }
+    .image-controllers {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      button {
+        margin: 0 1rem 1rem 1rem;
+      }
+    }
   }
 }
 

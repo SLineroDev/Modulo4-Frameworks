@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { image } from 'src/app/models/images';
+import { Image } from 'src/app/models/images';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GalleryService {
-  private imageList: image[] = [
+  private imageList: Image[] = [
     { id: 1, src: 'assets/img1.jpg', title: 'Imagen 1' },
     { id: 2, src: 'assets/img2.jpg', title: 'Imagen 2' },
     { id: 3, src: 'assets/img3.jpg', title: 'Imagen 3' },
@@ -18,7 +18,7 @@ export class GalleryService {
 
   constructor() {}
 
-  getImageList(): image[] {
+  getImageList(): Image[] {
     return this.imageList;
   }
 }

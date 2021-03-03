@@ -1,13 +1,31 @@
 <div class="gallery-container">
   <div *ngIf="selectedImage" class="selected-image">
     <img [src]="selectedImage.src" [alt]="selectedImage.title" />
-    <div class="image-controllers"></div>
+    <div class="image-controllers-container">
+      <div class="image-controllers-size">
+        <button mat-raised-button (click)="decrease()" color="primary">
+          Disminuir
+        </button>
+        <button mat-raised-button (click)="increase()" color="primary">
+          Aumentar
+        </button>
+      </div>
+      <div class="image-controllers">
+        <button mat-raised-button (click)="previous()" color="primary">
+          Anterior
+        </button>
+        <button mat-raised-button (click)="play()" color="primary">Play</button>
+        <button mat-raised-button (click)="stop()" color="primary">Stop</button>
+        <button mat-raised-button (click)="next()" color="primary">
+          Siguiente
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="image-list">
     <div *ngFor="let image of images">
       <img (click)="selectImage(image)" [src]="image.src" [alt]="image.title" />
-      <span>{{ image.id }}</span>
     </div>
   </div>
 </div>
