@@ -79,7 +79,7 @@ export class GalleryComponent {
   }
   play() {
     this.isPlaying = true;
-    this.intervalImg = interval(1000).subscribe((x) => {
+    this.intervalImg = interval(3000).subscribe(() => {
       this.next();
     });
   }

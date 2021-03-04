@@ -62,7 +62,7 @@
           class="{{
             image.id == selectedImage.id ? 'selected-image-list' : ''
           }}"
-          (click)="selectImage(image)"
+          (click)="selectImage(image); stop()"
           [src]="image.src"
           [alt]="image.title"
         />
