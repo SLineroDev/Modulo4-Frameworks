@@ -18,13 +18,14 @@ import { GalleryComponent } from './components/private/gallery/gallery.component
 import { CrudComponent } from './components/private/crud/crud.component';
 import { ProfileComponent } from './components/private/profile/profile.component';
 import { SlicePipe } from './pipes/slice/slice.pipe';
+import { RotateDirective } from './directives/rotate/rotate.directive';
 
 //Material Components
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RotateDirective } from './directives/rotate/rotate.directive';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { RotateDirective } from './directives/rotate/rotate.directive';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

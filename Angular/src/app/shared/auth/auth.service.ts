@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +16,13 @@ export class AuthService {
     this.logged = this.isLogged();
   }
 
-  login(username: string, password: string): boolean {
-    let res = false;
-
-    if (username == 'master' && password == '12') {
+  login(username: string, password: string): Observable<boolean> {
+    let res: Observable<boolean>;
+    if (username == 'master' && password == '12345678') {
       localStorage.setItem(this.USER_KEY, username);
-      this.logged = true;
-      this.loggedState.next(this.logged);
-      res = true;
+      res = of(true).pipe(delay(2000));
+    } else {
+      res = of(false).pipe(delay(2000));
     }
     return res;
   }

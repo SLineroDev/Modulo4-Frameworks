@@ -1,3 +1,4 @@
+<mat-progress-bar *ngIf="loginBar" mode="indeterminate"></mat-progress-bar>
 <form class="centered-container" [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="outline">
     <mat-label>Username</mat-label>

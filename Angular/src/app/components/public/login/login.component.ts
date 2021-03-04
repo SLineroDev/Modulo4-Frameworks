@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/shared/auth/auth.service';
 })
 export class LoginComponent {
   form: FormGroup;
+  loginBar: boolean = false;
 
   constructor(
     fb: FormBuilder,
@@ -30,11 +31,22 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      if (this.authService.login(this.username.value, this.password.value)) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        alert('Login incorrecto. \n Pss... User: master Password: 12');
-      }
+      this.loginBar = true;
+      this.authService
+        .login(this.username.value, this.password.value)
+        .subscribe((resp) => {
+          if (resp) {
+            this.router.navigate(['/dashboard']);
+            this.authService.logged = true;
+            this.authService.loggedState.next(true);
+            this.loginBar = false;
+          } else {
+            alert(
+              'Login incorrecto. \n Pss... User: master Password: 12345678'
+            );
+            this.loginBar = false;
+          }
+        });
     }
   }
 
