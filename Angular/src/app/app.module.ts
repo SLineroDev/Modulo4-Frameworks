@@ -24,6 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { RotateDirective } from './directives/rotate/rotate.directive';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MatInputModule } from '@angular/material/input';
     CrudComponent,
     ProfileComponent,
     SlicePipe,
+    RotateDirective,
   ],
   imports: [
     BrowserModule,

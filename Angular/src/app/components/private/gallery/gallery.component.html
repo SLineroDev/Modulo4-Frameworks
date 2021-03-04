@@ -1,10 +1,15 @@
 <div class="gallery-container">
   <div class="selected-image" *ngIf="selectedImage">
     <div id="selected-img" [style.width]="selectedImageWidth">
-      <img [src]="selectedImage.src" [alt]="selectedImage.title" />
+      <img
+        rotate
+        [step]="30"
+        [src]="selectedImage.src"
+        [alt]="selectedImage.title"
+      />
     </div>
 
-    <div class="image-controllers-container">
+    <div rotate class="image-controllers-container">
       <div class="image-controllers-size">
         <button mat-raised-button (click)="decrease()" color="primary">
           Disminuir
