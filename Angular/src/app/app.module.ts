@@ -17,6 +17,7 @@ import { DashboardComponent } from './components/private/dashboard/dashboard.com
 import { GalleryComponent } from './components/private/gallery/gallery.component';
 import { CrudComponent } from './components/private/crud/crud.component';
 import { ProfileComponent } from './components/private/profile/profile.component';
+import { SlicePipe } from './pipes/slice/slice.pipe';
 
 //Material Components
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -37,6 +38,7 @@ import { MatInputModule } from '@angular/material/input';
     GalleryComponent,
     CrudComponent,
     ProfileComponent,
+    SlicePipe,
   ],
   imports: [
     BrowserModule,

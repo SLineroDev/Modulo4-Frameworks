@@ -14,13 +14,13 @@ export class GalleryComponent {
   minImgId!: Number;
 
   selectedImage!: Image;
-  selectedImageWidth: String = '500px';
-
-  nextDisabled: boolean = false;
-  prevDisabled: boolean = true;
+  selectedImageWidth: String = '450px';
 
   isPlaying: boolean = false;
   intervalImg: Subscription | undefined;
+
+  firstPaginatorEl: number = 0;
+  lastPaginatorEl: number = 3;
 
   constructor(galleryService: GalleryService) {
     this.images = galleryService.getImageList();
@@ -34,26 +34,28 @@ export class GalleryComponent {
   next() {
     let nextImgId = this.selectedImage.id + 1;
     if (nextImgId <= this.maxImgId) {
-      let nextImg: Image | undefined = this.getImgById(nextImgId);
-      if (nextImg) {
-        this.selectImage(nextImg);
+      let nextImgPos: number = this.getImgPosById(nextImgId);
+      if (nextImgPos != -1) {
+        this.selectImage(this.images[nextImgPos]);
+        if (nextImgPos >= this.lastPaginatorEl) {
+          this.nextList();
+        }
       }
-      this.prevDisabled = false;
-      if (nextImgId == this.maxImgId) {
-        this.nextDisabled = true;
-      }
+    } else {
+      this.selectImage(this.images[0]);
+      this.firstPaginatorEl = 0;
+      this.lastPaginatorEl = 3;
     }
   }
   previous() {
     let prevImgId = this.selectedImage.id - 1;
     if (prevImgId >= this.minImgId) {
-      let prevImg: Image | undefined = this.getImgById(prevImgId);
-      if (prevImg) {
-        this.selectImage(prevImg);
-      }
-      this.nextDisabled = false;
-      if (prevImgId == this.minImgId) {
-        this.prevDisabled = true;
+      let prevImgPos: number = this.getImgPosById(prevImgId);
+      if (prevImgPos != -1) {
+        this.selectImage(this.images[prevImgPos]);
+        if (prevImgPos < this.firstPaginatorEl) {
+          this.previousList();
+        }
       }
     }
   }
@@ -78,13 +80,7 @@ export class GalleryComponent {
   play() {
     this.isPlaying = true;
     this.intervalImg = interval(1000).subscribe((x) => {
-      if (this.selectedImage.id != this.maxImgId) {
-        this.next();
-      } else {
-        this.selectImage(this.images[0]);
-        this.nextDisabled = false;
-        this.prevDisabled = true;
-      }
+      this.next();
     });
   }
   stop() {
@@ -102,14 +98,19 @@ export class GalleryComponent {
     }
   }
 
-  private getImgById(imageId: Number): Image | undefined {
-    let found: boolean = false;
-    let result: Image | undefined = undefined;
-    for (let i = 0; i < this.images.length && !found; i++) {
-      if (this.images[i].id == imageId) {
-        result = this.images[i];
-      }
-    }
-    return result;
+  previousList() {
+    this.firstPaginatorEl -= 3;
+    this.lastPaginatorEl -= 3;
+    this.selectImage(this.images[this.firstPaginatorEl]);
+  }
+
+  nextList() {
+    this.firstPaginatorEl += 3;
+    this.lastPaginatorEl += 3;
+    this.selectImage(this.images[this.firstPaginatorEl]);
+  }
+
+  private getImgPosById(imageId: number): number {
+    return this.images.findIndex((img) => img.id == imageId);
   }
 }

@@ -16,7 +16,7 @@
       <div class="image-controllers">
         <button
           mat-raised-button
-          [disabled]="prevDisabled"
+          [disabled]="selectedImage.id == images[0].id"
           (click)="previous()"
           color="primary"
         >
@@ -40,7 +40,7 @@
         </button>
         <button
           mat-raised-button
-          [disabled]="nextDisabled"
+          [disabled]="selectedImage.id == images[images.length - 1].id"
           (click)="next()"
           color="primary"
         >
@@ -50,9 +50,41 @@
     </div>
   </div>
 
-  <div class="image-list">
-    <div *ngFor="let image of images">
-      <img (click)="selectImage(image)" [src]="image.src" [alt]="image.title" />
+  <div class="image-list-container">
+    <div class="image-list">
+      <div
+        class="image-list-item"
+        *ngFor="
+          let image of images | sliceImg: firstPaginatorEl:lastPaginatorEl
+        "
+      >
+        <img
+          class="{{
+            image.id == selectedImage.id ? 'selected-image-list' : ''
+          }}"
+          (click)="selectImage(image)"
+          [src]="image.src"
+          [alt]="image.title"
+        />
+      </div>
+    </div>
+    <div class="paginator-buttons">
+      <button
+        mat-raised-button
+        [disabled]="firstPaginatorEl == 0"
+        (click)="previousList()"
+        color="primary"
+      >
+        Anterior
+      </button>
+      <button
+        mat-raised-button
+        [disabled]="lastPaginatorEl >= images.length"
+        (click)="nextList()"
+        color="primary"
+      >
+        Siguiente
+      </button>
     </div>
   </div>
 </div>
