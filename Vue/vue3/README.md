@@ -1,6 +1,6 @@
 # vue3
 
-Tengo que seguir haciendolo, pero me esta costando bastante porque hay mucho lio cuando busco algo en internet. Entre composition API, vue 2 o vue 3, o nuxtJS no encuentro nunca justo mi caso que es vue 3 + composition API.
+He conseguido echarlo a andar por fin pero menudo quebradero de cabeza... Esta muy mal la documentacion si quiero usar composition API. Necesito buscar como se hace algo y todo es con vue 2, con la otra API, un lio tremendo... La verdad que no me esperaba una experiencia tan mala queriendo usar por primera vez vue. Quizás es por querer usar la ultima version (?)
 
 ## Project setup
 
