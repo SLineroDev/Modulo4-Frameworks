@@ -3,16 +3,16 @@ import { Member } from "@/models/Member";
 export const MemberService = {
   async getMembersByOrg(org: string): Promise<Member[]> {
     const memberList: Member[] = await fetch(
-      /*       `https://api.github.com/orgs/${encodeURI(org)}/members`,
+      `https://api.github.com/orgs/${encodeURI(org)}/members`,
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
-        }, */
-      "/members.mock.json",
+        },
+        /*       "/members.mock.json",
       {
         headers: {
           Accept: "application/json",
-        },
+        }, */
       }
     )
       .then((resp) => {
@@ -29,28 +29,16 @@ export const MemberService = {
 
     return memberList;
   },
-  async getMembersByOrgAndUserName(
-    org: string,
-    userName: string
-  ): Promise<Member> {
+  async getMemberData(userName: string): Promise<Member> {
     const memberList: Member = await fetch(
-      `https://api.github.com/orgs/${encodeURI(org)}/members/${encodeURI(
-        userName
-      )}`,
+      `https://api.github.com/users/${userName}`,
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
         },
       }
     )
-      .then((resp) => {
-        console.log(resp);
-        if (resp.status != 200) {
-          throw new Error("No existe la organizacion");
-        }
-
-        return resp.json();
-      })
+      .then((resp) => resp.json())
       .catch((err) => {
         console.log(err);
       });

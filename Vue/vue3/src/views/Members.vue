@@ -1,12 +1,12 @@
 <template>
   <div class="search-container">
     <label for="org">Organizacion: </label>
-    <input type="text" name="org" v-model="organization" />
+    <input type="text" name="org" v-model="orgInput" @change="setOrgStore()" />
     <button @click="search()">Buscar</button>
   </div>
   <div class="list-container">
     <div class="list-item" v-for="member in memberList" :key="member.id">
-      <router-link :to="`/${organization.value}/member/${member.login}`">
+      <router-link :to="`/member/${member.login}`">
         <img :src="member.avatar_url" />
         {{ member.login }}
       </router-link>
@@ -15,26 +15,43 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from "vue";
+import { computed, defineComponent, Ref, ref } from "vue";
 import { MemberService } from "@/services/member";
 import { Member } from "@/models/Member";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "Members",
   async setup() {
-    const organization: Ref<string> = ref("lemoncode");
+    const store = useStore();
+    const orgInput: Ref<string> = ref("");
+
+    orgInput.value = store.state.organization || "lemoncode";
+
+    const organization = computed(() => ({
+      get(): string {
+        return store.state.organization;
+      },
+      set(value: string) {
+        store.commit("setOrg", value);
+      },
+    }));
 
     const memberList: Ref<Member[]> = ref([]);
 
-    memberList.value = await MemberService.getMembersByOrg(organization.value);
+    memberList.value = await MemberService.getMembersByOrg(orgInput.value);
 
-    const search = async () => {
-      memberList.value = await MemberService.getMembersByOrg(
-        organization.value
-      );
+    const setOrgStore = () => {
+      organization.value.set(orgInput.value);
     };
 
-    return { organization, memberList, search };
+    const search = async () => {
+      console.log(organization.value);
+
+      memberList.value = await MemberService.getMembersByOrg(orgInput.value);
+    };
+
+    return { orgInput, organization, memberList, search, setOrgStore };
   },
 });
 </script>

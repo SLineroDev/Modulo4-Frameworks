@@ -1,27 +1,39 @@
 <template>
-  <img :src="member.avatar_url" />
-  {{ member.login }}
+  <button @click="back()">Volver</button>
+  <div v-if="member">
+    <img :src="member.avatar_url" />
+    <div>
+      {{ member.login }}
+    </div>
+    <div>
+      {{ member.html_url }}
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { Member } from "@/models/Member";
-import { RouteLocation } from "vue-router";
+import { useRoute } from "vue-router";
 import { MemberService } from "@/services/member";
+import router from "@/router";
 
 export default defineComponent({
   async setup() {
     const member = ref({} as Member);
 
-    const org = String((this.$route as RouteLocation).params.org);
-    const userName = String((this.$route as RouteLocation).params.login);
+    const back = () => {
+      router.push("/");
+    };
 
-    member.value = await MemberService.getMembersByOrgAndUserName(
-      org,
-      userName
-    );
+    const route = useRoute();
+    const userName = route.params.login?.toString();
 
-    return { member };
+    if (userName) {
+      member.value = await MemberService.getMemberData(userName);
+    }
+
+    return { member, back };
   },
 });
 </script>
