@@ -6,7 +6,7 @@
       {{ member.login }}
     </div>
     <div>
-      {{ member.html_url }}
+      <a :href="member.html_url">{{ member.html_url }}</a>
     </div>
   </div>
 </template>
