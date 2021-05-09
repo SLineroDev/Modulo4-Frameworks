@@ -1,6 +1,6 @@
 # vue3
 
-No puedo mas con vue, es imposible hacer nada porque cualquier duda no se si es de vue 2, de vue 3, de nuxt, de composition API , de la otra... Encima el CLI apenas da informacion, no puedo mas con vue.........
+Tengo que seguir haciendolo, pero me esta costando bastante porque hay mucho lio cuando busco algo en internet. Entre composition API, vue 2 o vue 3, o nuxtJS no encuentro nunca justo mi caso que es vue 3 + composition API.
 
 ## Project setup
 
